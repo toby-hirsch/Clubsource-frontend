@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600|Open+Sans:400,400i,600'); /*Change this to eliminate all the unused Montserrat thicknesses*/
+.bigbutton{
+	background-color: hsl(195, 100%, 35%);
+	border: none;
+	padding: 10px;
+	border-radius: 15px;
+	min-width: 200px;
+	color: white;
+	transition: all 0.2s ease;
+}
+.bigbutton:hover{
+	background-color: hsl(195, 100%, 30%);
+}
+.bigbutton:focus{
+	outline: none;
+}
+.bigbutton:active{
+	background-color: hsl(195, 100%, 25%);
+	transition: none;
+}
+body{
+	font-family: Open Sans, Montserrat, sans serif;
+	--title-font: Montserrat, Open Sans, sans serif;
+	--body-font: Open Sans, Montserrat, sans serif;
+}
+.gray{
+	color: hsl(0, 0%, 50%);
+}
+.navbar{
+	height: 80px;
+	border-bottom: 1px solid hsl(0, 0%, 75%);
+	text-align: right;
+	margin-bottom: 80px;
+	position: relative;
+}
+.navcont{
+	display: inline-block;
+	position: absolute;
+	bottom: 16px;
+}
+.navright{right: 5%}
+.navleft{left: 5%}
+.navlink{
+	color: hsl(195, 20%, 15%);
+	font-family: Montserrat;
+	font-size: 20px;
+	margin-left: 70px;
+	margin-right: 10px;
+	display: inline-block;
+	font-weight: 500;
+}
+.navlink:hover{
+	color: hsl(195, 100%, 40%);
+	text-decoration: none;
+}
+
+.mainlogonav{ 
+	font-family: Montserrat;
+	font-weight: 600;
+	font-size: 48px;
+	line-height: 48px;
+	background: hsl(195, 100%, 50%);
+	background: -webkit-linear-gradient(hsl(195, 100%, 55%) 0%, hsl(195, 100%, 45%) 60%, hsl(195, 100%, 44.5%) 61%, hsl(195, 100%, 35%));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	display: inline-block;
+	vertical-align: bottom;
+	margin-bottom: -3px;
+}
+.mainlogonav:hover, .mainlogofoot:hover{
+	background: hsl(195, 100%, 45%);
+	background: -webkit-linear-gradient(hsl(195, 100%, 50%) 0%, hsl(195, 100%, 40%) 60%, hsl(195, 100%, 39.5%) 61%, hsl(195, 100%, 35%));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.shrink{
+	font-size: 0.7em;
+}
+.title{
+	text-align: center;
+	font-family: var(--title-font);
+	font-size: 4em;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	margin-bottom: 60px;
+}

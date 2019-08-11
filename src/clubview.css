@@ -1,0 +1,76 @@
+.clubbutton{
+	display: inline-block;
+	line-height: 40px;
+	padding: 0;
+	height: 40px;
+	width: 150px;
+	border-radius: 29px;
+	border: 1px solid hsl(0, 0%, 60%);
+	color: inherit;
+}
+.clubbutton:hover{
+	border-color: hsl(0, 0%, 50%);
+	color: inherit;
+	text-decoration: inherit;
+}
+.clubbutton:focus{
+	outline: none;
+}
+.clubtitle{
+	font-size: 3em;
+	text-align: center;
+}
+.edit{
+	background-color: hsl(0, 0%, 95%);
+	margin-left: 2px;
+}
+.info{
+	margin: 0 50px;
+	/*background-color: hsl(0, 0%, 95%);*/
+	border: 1px solid hsl(0, 0%, 25%);
+	border-radius: 10px;
+	padding: 20px 0;
+}
+.middle{
+	background-color: hsl(0, 0%, 95%);
+	border-width: 1px 0;
+	border-color: hsl(0, 0%, 75%);
+	border-style: solid;
+	padding: 20px;
+}
+.nomargin{
+	margin: 0;
+}
+.username{
+	color: hsl(0, 0%, 60%);
+	text-align: center;
+}
+.sidead{
+	border: 1px solid black;
+	-ms-flex: 0 0 300px;
+	flex: 0 0 300px;
+	height: 600px;
+}
+.subscribe{
+	background-color: hsl(195, 100%, 70%);
+}
+.subscribe:disabled{
+	background-color: hsl(0, 0%, 85%);
+}
+.subbed{
+	background-color: hsl(0, 0%, 75%);
+}
+.subbed:hover{
+	border-color: hsl(0, 100%, 50%);
+	color: hsl(0, 100%, 50%);
+}
+.ql-image{
+	max-width: 100% !important;
+}
+.quillcontent{
+	padding: 0 20px;
+	margin-top: 20px;
+}
+.title{
+	margin-bottom: 15px;
+}
