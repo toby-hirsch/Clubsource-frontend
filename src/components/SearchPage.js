@@ -4,22 +4,7 @@ import { Link } from 'react-router-dom';
 import SearchResult from './SearchResult';
 import Searching from './Searching';
 import qs from 'qs';
-
-
-
-/*
-TODO: When this component is called:
-	*If there is a query string...
-		*Parse it
-		*Query the /searchData API with the query string data
-		*Sort and present SearchItem components
-	*If there isn't a query string, query the /searchData API for the user's default preferences
-			*If they exist (the user is logged in and has configured his preferences), sort and present SearchItem components
-			*If they don't exist, display a message with a link telling them to configure their preferences or put in a search
-
-
-*/
-
+import handleErrors from '../error-handler';
 
 class SearchPage extends Component {
 	constructor(props){
@@ -28,9 +13,19 @@ class SearchPage extends Component {
 			searchtext: '',
 			clubs: [],
 			searching: '',
+			status: '',
 			url: window.location.protocol + '//' + (window.location.hostname==='localhost' ? 'localhost:3000' : window.location.hostname),
 		};
 	}
+	
+	statusmap = {
+		'': null,
+		'good': <h3>Suggested Clubs</h3>,
+		'not signed in': <div><h4>You are not logged in. To get better club suggestions, <a href="/accounts/login">log in</a>.</h4><h4>Here are some popular clubs at your school:</h4></div>,
+		'not configured': <div><h4>You have not added any interests. To get club suggestions, configure your interests on your <a href='/profile'>profile</a>.</h4><h4>Here are some popular clubs at your school:</h4></div>,
+		'failed search': <p>There was an error processing your search. Make sure you are connected to the internet and retry</p>
+	}
+
 	
 	async componentDidMount() {
 		var query = this.props.location.search;
@@ -60,17 +55,28 @@ class SearchPage extends Component {
 			console.log('query string: ' + search);
 			//search = search.substring(1).toLowerCase().replace(/ /g, '_');
 			console.log('searching for ' + search);
-			const res = await fetch(this.state.url + '/searchData/search/' + search);
-			const clubres = await res.json();
-			this.setState({clubs: clubres.map((val) => <SearchResult {...val} key={val.username}/>), searching: ''});
+			fetch(this.state.url + '/searchData/search/' + search)
+				.then(handleErrors)
+				.then(clubres => {
+					this.setState({clubs: clubres, searching: '', status: ''});
+				}).catch(err => {
+					console.error(err);
+					this.setState({status: 'failed search', searching: ''});
+				});
 			//TODO: create error handling so that this doesn't break if someone types a poorly formatted query string
 			//TODO: have this query to find the appropriate ads to render
 		}
 		else {
-			const res = await fetch(this.state.url + '/searchData/getdefault');
-			const data = await res.json();
-			console.log(data);
-			this.setState({clubs: data.map((val) => <SearchResult {...val} key={val.username}/>), searching: ''});
+			fetch(this.state.url + '/searchData/getdefault')
+				.then(handleErrors)
+				.then(data => {
+					console.log(data);
+					this.setState({clubs: data.clubs, status: data.status, searching: ''});
+				}).catch(err => {
+					this.setState({status: 'failed search', searching: ''});
+					console.error(err)
+				});
+			
 		}
 			
 	}
@@ -107,9 +113,9 @@ class SearchPage extends Component {
 						</div>
 						
 						<div className='col'>
-							
 							{this.state.searching}
-							{this.state.clubs}
+							<div className='text-center'>{this.statusmap[this.state.status]}</div>
+							{this.state.clubs.map((val) => <SearchResult {...val} key={val.username}/>)}
 							
 						</div>
 						

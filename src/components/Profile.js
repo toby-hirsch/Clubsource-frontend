@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Interests from './Interests';
 import SearchResult from './SearchResult';
 import '../profile.css';
+import handleErrors from '../error-handler';
 
 class Profile extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			user: {
-				interests: [],
 				subscriptions: []
 			},
 			url: window.location.protocol + '//' + (window.location.hostname==='localhost' ? 'localhost:3000' : window.location.hostname),
@@ -25,7 +25,7 @@ class Profile extends Component {
 				<div className='row' style={{marginBottom: '40px'}}>
 					<div className='col-md profilesection' style={{'marginLeft': '20px'}}>
 						<h2 className='prosectionheader'>Interests</h2>
-						{this.state.user.interests.length ? null : <p className='gray'><em>Configuring your interests allows Clubsource to suggest clubs that you might like.</em></p>}
+						{this.state.user.interests && this.state.user.interests.length ? null : <p className='gray'><em>Configuring your interests allows Clubsource to suggest clubs that you might like.</em></p>}
 						<hr />
 						<Interests interests={this.state.user.interests} url={this.state.url}/>
 					</div>
@@ -42,16 +42,17 @@ class Profile extends Component {
 	
 	async componentDidMount(){
 		console.log(this.state.url);
-		const res = await fetch(this.state.url + '/profileData/user');
-		console.log('data fetched');
-		const user = await res.json();
-		console.log('user data retrieved');
-		console.log(user);
+		fetch(this.state.url + '/profileData/user')
+			.then(handleErrors)
+			.then(user => {
+				console.log('data fetched');
+				console.log('user data retrieved');
+				console.log(user);
+				if (!user)
+					window.location.href = '/auth/google';
+				this.setState({user: user});
+			}).catch(err => console.error(err));
 		
-		if (!user)
-			window.location.href = '/auth/google';
-		await this.setState({user: user});
-		console.log(this.state);
 		
 	}
 }

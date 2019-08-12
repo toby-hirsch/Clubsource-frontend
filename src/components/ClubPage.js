@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import handleErrors from '../error-handler';
 
 const subcontent = {
 	'': 'Subscribe',
@@ -57,19 +58,20 @@ class ClubPage extends Component {
 	subscribe = async() => {
 		let adding = this.state.subbed==='';
 		this.setState({subbed: 'loading'});
-		const res = await fetch(this.state.url + '/searchData/subscribe', {
+		fetch(this.state.url + '/searchData/subscribe', {
 			method: 'post',
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				club: this.props._id,
 				adding: adding
 			})
-		});
-		const result = await res.json();
-		if (adding)
-			this.setState({subbed: 'subbed'});
-		else
-			this.setState({subbed: ''});
+		}).then(handleErrors).then(res => {
+			if (adding)
+				this.setState({subbed: 'subbed'});
+			else
+				this.setState({subbed: ''});
+		}).catch(err => console.error(err));
+		
 	}
 }
 

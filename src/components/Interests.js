@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import handleErrors from '../error-handler';
 //import { Button } from 'react-router-dom';
 
 const tags = [
@@ -32,38 +33,64 @@ class Interests extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			selectedtags: this.props.interests, //This is not working. it always set is as an empty array even when the props are correct
-			originaltags: this.props.interests
+			save: 'saved'
 		};
+		if (this.props.interests && !this.originaltags)
+			this.originaltags = [...this.props.interests].sort();
+		console.log('original tags in constructor');
+		console.log(this.originaltags);
 	}
+		
+	savecontent = {
+		'': 'Save Changes',
+		loading: 'Saving...',
+		saved: 'Saved'
+	};
+	
+	originaltags;
 	
 	componentWillReceiveProps(nextProps){
-		if (nextProps.interests !== this.props.interests)
-			this.setState({selectedtags: nextProps.interests, originaltags: nextProps.interests});
+		console.log('receiving props');
+		console.log(nextProps);
+		if (nextProps.interests !== this.props.interests){
+			let interests = nextProps.interests.sort();
+			this.setState({selectedtags: interests});
+			if (!this.originaltags){
+				console.log('changing original tags from:');
+				console.log(this.originaltags);
+				console.log('to:');
+				console.log(interests);
+				this.originaltags = [...interests];
+			}
+		}
 	}
 	
 	render() {
 		return (
 			<div className='interestcontainer'>
-				{tags.map((tag) => <div 
-					className={'interest' + (this.state.selectedtags.indexOf(tag) === -1 ? '': ' selected')}
-					onClick={() => this.update(tag)}
-					key={tag}
-					>
-					{tag}
-				</div>)}
+				{tags.map((tag) => 
+					<div 
+						className={'interest' + (this.state.selectedtags && this.state.selectedtags.indexOf(tag) !== -1 ? ' selected': '')}
+						onClick={() => this.update(tag)}
+						key={tag}
+						>
+						{tag}
+					</div>
+				)}
 				<div style={{textAlign: 'center', marginTop: '20px'}}>
-					<button className='bigbutton' onClick={this.submittags}>Save Changes </button>
+					<button 
+						className={'bigbutton savebutton ' + this.state.save}
+						onClick={this.submittags}
+						disabled={this.state.save}>
+						{this.savecontent[this.state.save]}
+					</button>
 				</div>
 			</div>
 		);
 	}
 	
-	async componentDidMount(){
-		this.setState({selectedtags: this.props.interests, originaltags: this.props.interests});
-	}
-	
 	submittags = async() => {
+		this.setState({save: 'loading'});
 		let temptags = this.state.selectedtags;
 		console.log(temptags);
 		console.log(typeof temptags);
@@ -74,23 +101,48 @@ class Interests extends Component {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(temptags),
 			credentials: 'include'
-		}).then((res) => res.json()).then((newtags) => {
+		}).then(handleErrors).then(newtags => {
 			console.log('response');
 			console.log(newtags);
-			this.setState({originaltags: newtags});
-		});
+			this.originaltags = [...newtags];
+			this.setState({save: 'saved'});
+		}).catch((err) => console.error(err));
 	}
 	
 	update(tag) {
 		let temptags = this.state.selectedtags;
 		let curridx = temptags.indexOf(tag);
 		if (curridx === -1)
-			temptags.push(tag);
+			insertsorted(temptags, tag);
 		else
 			temptags.splice(curridx, 1);
 		this.setState({selectedtags: temptags});
+		console.log('new tags');
+		console.log(temptags);
+		console.log('old tags');
+		console.log(this.originaltags);
+		if (temptags.join('')===this.originaltags.join(''))
+			this.setState({save: 'saved'})
+		else
+			this.setState({save: ''});
 		console.log(this.state.selectedtags);
 	}
+}
+
+function insertsorted(arr, el){
+	arr.push(el);
+	let len = arr.length;
+	let i = len - 1;
+	while (i > 0 && arr[i].localeCompare(arr[i-1]) < 0){
+		swap(arr, i, i-1);
+		i--;
+	}
+}
+
+function swap(arr, i, j){
+	let temp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = temp;
 }
 
 export default Interests;

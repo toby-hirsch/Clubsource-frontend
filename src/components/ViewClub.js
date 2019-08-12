@@ -3,6 +3,7 @@ import '../clubview.css';
 import { Parser } from 'html-to-react';
 import Error404 from './Error404';
 import ClubPage from './ClubPage';
+import handleErrors from '../error-handler';
 
 
 console.log(process.env.NODE_ENV);
@@ -13,7 +14,7 @@ class ViewClub extends Component {
 		this.state = {
 			club: {},
 			buttons: {
-				subscribe: false,
+				subscribed: false,
 				edit: false
 			},
 			exists: true,
@@ -54,21 +55,21 @@ class ViewClub extends Component {
 		
 		var parser = new Parser();
 		var username = this.props.match.params.username;
-		const res = await fetch(this.state.url + '/searchData/' + username, {
+		fetch(this.state.url + '/searchData/' + username, {
 			credentials: 'include'
-		}); //Put error handling here
-		const data = await res.json();
-		if (data === 'not found') {
-			console.log('page not found');
-			this.setState({exists: false});
-			return;
-		}
-		data.club.description = parser.parse(data.club.description);
-		this.setState({club: data.club});
-		let buttons = {};
-		buttons.subscribed = data.subscribed;
-		buttons.edit = data.isowner;
-		this.setState({buttons: buttons});
+		}).then(handleErrors).then(data => {
+			if (data === 'not found') {
+				console.log('page not found');
+				this.setState({exists: false});
+				return;
+			}
+			data.club.description = parser.parse(data.club.description);
+			this.setState({club: data.club});
+			let buttons = {};
+			buttons.subscribed = data.subscribed;
+			buttons.edit = data.isowner;
+			this.setState({buttons: buttons});
+		}).catch(err => console.error(err));
 	}
 	
 	
