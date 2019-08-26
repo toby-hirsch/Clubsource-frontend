@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import handleErrors from '../error-handler';
+import '../quilldisplaystyles.css';
 
 const subcontent = {
 	'': 'Subscribe',

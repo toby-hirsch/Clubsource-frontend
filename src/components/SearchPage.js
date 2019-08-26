@@ -5,6 +5,7 @@ import SearchResult from './SearchResult';
 import Searching from './Searching';
 import qs from 'qs';
 import handleErrors from '../error-handler';
+import Ad from './Ad';
 
 class SearchPage extends Component {
 	constructor(props){
@@ -57,8 +58,8 @@ class SearchPage extends Component {
 			console.log('searching for ' + search);
 			fetch(this.state.url + '/searchData/search/' + search)
 				.then(handleErrors)
-				.then(clubres => {
-					this.setState({clubs: clubres, searching: '', status: ''});
+				.then(res => {
+					this.setState({clubs: res.clubs, ads: res.ads, searching: '', status: ''});
 				}).catch(err => {
 					console.error(err);
 					this.setState({status: 'failed search', searching: ''});
@@ -71,7 +72,7 @@ class SearchPage extends Component {
 				.then(handleErrors)
 				.then(data => {
 					console.log(data);
-					this.setState({clubs: data.clubs, status: data.status, searching: ''});
+					this.setState({clubs: data.clubs, ads: data.ads, status: data.status, searching: ''});
 				}).catch(err => {
 					this.setState({status: 'failed search', searching: ''});
 					console.error(err)
@@ -89,6 +90,7 @@ class SearchPage extends Component {
 	}
 	
 	render() {
+		//Move the search bar to its own component
 		return (
 			<div>
 				<h1 className='title'>Find Clubs</h1>
@@ -106,22 +108,21 @@ class SearchPage extends Component {
 						</div>
 					</div>
 				</div>
-				<div className='container-fluid'>
-					<div className='row'>
-						<div className='col sidead'>
-							Left Ad
-						</div>
-						
-						<div className='col'>
+				<div className='row no-gutters'>
+					<div className='col sidead'>
+						{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
+					</div>
+					
+					<div className='col'>
+						<div style={{padding: '10px'}}>
 							{this.state.searching}
 							<div className='text-center'>{this.statusmap[this.state.status]}</div>
 							{this.state.clubs.map((val) => <SearchResult {...val} key={val.username}/>)}
-							
 						</div>
-						
-						<div className='col sidead'>
-							Right Ad
-						</div>
+					</div>
+					
+					<div className='col sidead'>
+						{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
 					</div>
 				</div>
 			</div>
