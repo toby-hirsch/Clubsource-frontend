@@ -108,8 +108,16 @@ class SearchPage extends Component {
 						</div>
 					</div>
 				</div>
+				<div className='topadcontainer'>
+					<div className='topad d-inline-block d-lg-none'>
+						{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
+					</div>
+					<div className='topad d-inline-block d-lg-none'>
+						{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
+					</div>
+				</div>
 				<div className='row no-gutters'>
-					<div className='col sidead'>
+					<div className='col sidead d-none d-lg-block'>
 						{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
 					</div>
 					
@@ -121,7 +129,7 @@ class SearchPage extends Component {
 						</div>
 					</div>
 					
-					<div className='col sidead'>
+					<div className='col sidead d-none d-lg-block'>
 						{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
 					</div>
 				</div>

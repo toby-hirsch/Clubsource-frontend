@@ -47,6 +47,7 @@
 	border-radius: 0 10px 10px 0;
 	vertical-align: top;
 	border: 1px solid hsl(0, 0%, 75%);
+	height: 46px;
 }
 #searchtext{
 	width: 75%;
@@ -61,12 +62,57 @@
 #searchtext:focus{outline: none}
 .sidead{
 	border: 1px solid black;
-	-ms-flex: 0 0 300px;
-	flex: 0 0 300px;
+	-ms-flex: 0 0 302px;
+	flex: 0 0 302px;
 	height: 600px;
 	overflow: hidden;
+}
+.sidead img, .topad img{
+	max-width: 100%;
+	max-height: 100%;
 }
 .taglist{
 	color: hsl(0, 0%, 50%);
 	margin-bottom: 0;
+}
+.topad{
+	border: 1px solid black;
+	width: 302px;
+	height: 602px;
+	overflow: hidden;
+}
+.topadcontainer{
+	text-align: center;
+}
+
+@media screen and (max-width: 768px){
+	body{
+		font-size: 0.8em;
+	}
+	h1{
+		font-size: 2.5em;
+	}
+	h4{
+		font-size: 1.5em;
+	}
+}
+
+@media screen and (max-width: 650px){
+	.topad{
+		width: 202px;
+		height: 402px;
+	}
+}
+
+@media screen and (max-width: 450px){
+	.topad{
+		width: 152px;
+		height: 302px;
+	}
+	#searchbutton{
+		width: 100px;
+	}
+	#searchtext{
+		width: calc(100% - 103px);
+	}
 }
