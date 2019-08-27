@@ -7,8 +7,6 @@ import handleErrors from '../error-handler';
 import Ad from './Ad';
 
 
-console.log(process.env.NODE_ENV);
-
 class ViewClub extends Component {
 	constructor(props){
 		super(props);
@@ -25,23 +23,32 @@ class ViewClub extends Component {
 	
 	render() {
 		return (
-			
-			<div className='row no-gutters'>
-				<div className='col sidead'>
-					{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
+			<div>
+				<div className='topadcontainer'>
+					<div className='topad d-inline-block d-lg-none'>
+						{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
+					</div>
+					<div className='topad d-inline-block d-lg-none'>
+						{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
+					</div>
 				</div>
-				
-				<div className='col'>
-					{this.state.exists ? 
-						<ClubPage {...this.state.club} 
-							showedit={this.state.buttons.isowner} 
-							showsub={this.props.accType.student}
-							subbed={this.state.buttons.subscribed ? 'subbed' : ''} /> : 
-						<Error404 />}
-				</div>
-				
-				<div className='col sidead'>
-					{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
+				<div className='row no-gutters'>
+					<div className='col sidead d-none d-lg-block'>
+						{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
+					</div>
+					
+					<div className='col'>
+						{this.state.exists ? 
+							<ClubPage {...this.state.club} 
+								showedit={this.state.buttons.isowner} 
+								showsub={this.props.accType.student}
+								subbed={this.state.buttons.subscribed ? 'subbed' : ''} /> : 
+							<Error404 />}
+					</div>
+					
+					<div className='col sidead d-none d-lg-block'>
+						{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
+					</div>
 				</div>
 			</div>
 			
