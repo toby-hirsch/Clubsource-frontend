@@ -1,1 +1,1 @@
-See [Clubsource](github.com/toby-hirsch/clubsource)
+See [Clubsource](www.github.com/toby-hirsch/clubsource)
