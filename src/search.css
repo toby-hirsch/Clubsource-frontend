@@ -62,8 +62,8 @@
 #searchtext:focus{outline: none}
 .sidead{
 	border: 1px solid black;
-	-ms-flex: 0 0 302px;
-	flex: 0 0 302px;
+	-ms-flex: 0 0 301px;
+	flex: 0 0 301px;
 	height: 600px;
 	overflow: hidden;
 }

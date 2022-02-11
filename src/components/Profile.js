@@ -17,8 +17,8 @@ class Profile extends Component {
 	
 	
 	render() {
-		console.log('props');
-		console.log(this.props);
+		console.log('printing user state object');
+		console.log(this.state.user);
 		return (
 			<div className='container-fluid'>
 				<h1 className='title'>Profile</h1>
@@ -27,13 +27,13 @@ class Profile extends Component {
 						<h2 className='prosectionheader'>Interests</h2>
 						{this.state.user.interests && this.state.user.interests.length ? null : <p className='gray'><em>Configuring your interests allows Clubsource to suggest clubs that you might like.</em></p>}
 						<hr />
-						<Interests interests={this.state.user.interests} url={this.state.url}/>
+						{this.state.user.interests ? <Interests interests={this.state.user.interests} url={this.state.url} /> : null}
 					</div>
 					<div className='col-md profilesection' style={{'marginRight': '20px'}}>
 						<h2 className='prosectionheader'>Subscriptions</h2>
-						{this.state.user.subscriptions.length ? null : <p className='gray'><em>Clubs that you subscribe to will appear here so that you can easily find them. To suscribe to a club, visit its page and click the subscribe button. To find clubs, click browse clubs.</em></p>}
+						{this.state.user.subscriptions && this.state.user.subscriptions.length ? null : <p className='gray'><em>Clubs that you subscribe to will appear here so that you can easily find them. To suscribe to a club, visit its page and click the subscribe button. To find clubs, click browse clubs.</em></p>}
 						<hr />
-						{this.state.user.subscriptions.map((val) => <SearchResult {...val} key={val.username} /> )} 
+						{this.state.user.subscriptions ? this.state.user.subscriptions.map((val) => <SearchResult {...val} key={val.username} /> ) : null} 
 					</div>
 				</div>
 			</div>
@@ -45,12 +45,11 @@ class Profile extends Component {
 		fetch(this.state.url + '/profileData/user')
 			.then(handleErrors)
 			.then(user => {
-				console.log('data fetched');
 				console.log('user data retrieved');
 				console.log(user);
 				if (!user)
 					window.location.href = '/auth/google';
-				this.setState({user: user});
+				this.setState({user: JSON.parse(user)});
 			}).catch(err => console.error(err));
 		
 		

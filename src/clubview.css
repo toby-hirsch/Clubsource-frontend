@@ -20,16 +20,21 @@
 	font-size: 3em;
 	text-align: center;
 }
+.clubwrapper{
+	padding: 0 50px;
+}
 .edit{
 	background-color: hsl(0, 0%, 95%);
 	margin-left: 2px;
 }
 .info{
-	margin: 0 50px;
 	/*background-color: hsl(0, 0%, 95%);*/
 	border: 1px solid hsl(0, 0%, 25%);
 	border-radius: 10px;
 	padding: 20px 0;
+}
+.info a{
+	word-break: break-all;
 }
 .middle{
 	background-color: hsl(0, 0%, 95%);
@@ -47,9 +52,10 @@
 }
 .sidead{
 	border: 1px solid black;
-	-ms-flex: 0 0 300px;
-	flex: 0 0 300px;
+	-ms-flex: 0 0 301px;
+	flex: 0 0 301px;
 	height: 600px;
+	overflow: hidden;
 }
 .subscribe{
 	background-color: hsl(195, 100%, 70%);

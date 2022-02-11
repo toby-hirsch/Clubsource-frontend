@@ -33,7 +33,8 @@ class Interests extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			save: 'saved'
+			save: 'saved',
+			selectedtags: this.props.interests
 		};
 		if (this.props.interests && !this.originaltags)
 			this.originaltags = [...this.props.interests].sort();

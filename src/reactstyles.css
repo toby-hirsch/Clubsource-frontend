@@ -23,6 +23,57 @@ body{
 	--title-font: Montserrat, Open Sans, sans serif;
 	--body-font: Open Sans, Montserrat, sans serif;
 }
+#closebtn{
+	position: fixed;
+	top: 10px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	border-radius: 35.4px;
+	border: 1px solid hsl(0, 0%, 70%);
+}
+#close{
+	position: fixed;
+	top: 20px;
+	right: 30px;
+	width: 30px;
+	height: 30px;
+}
+#closewrap{
+	position: fixed;
+	top: 9px;
+	right: 19px;
+	width: 52px;
+	height: 52px;
+	border-radius: 35.4px;
+	padding: 0px;
+	display: none;
+	z-index: 2500;
+}
+#closewrap:hover{
+	cursor: pointer;
+}
+#fullnavcont{
+	background-color: hsl(0, 0%, 90%);
+	padding: 30px;
+	border-radius: 10px;
+}
+.fullnavlink{
+	font-size: 1.5em;
+	color: hsl(195, 100%, 40%);
+	transition: color 0.2s ease-out;
+}
+#fullnav{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: hsla(0, 0%, 90%, 0.8);
+	text-align: center;
+	display: none;
+	z-index: 2000;
+}
 .gray{
 	color: hsl(0, 0%, 50%);
 }
@@ -37,6 +88,12 @@ body{
 	display: inline-block;
 	position: absolute;
 	bottom: 16px;
+}
+#navdrop{
+	display: none;
+	position: absolute;
+	bottom: 8px;
+	right: -20px;
 }
 .navright{right: 5%}
 .navleft{left: 5%}
@@ -83,4 +140,69 @@ body{
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	margin-bottom: 60px;
+}
+.triangledown{
+	width: 0;
+	height: 0;
+	display: inline-block;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-top: 16px solid hsl(195, 40%, 40%);
+	transition: all 0.3s ease;
+}
+.triangledown:hover{
+	border-top-color: hsl(195, 100%, 40%);
+	cursor: pointer;
+}
+
+
+.outer {
+	display: table;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+.inner {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+@media only screen and (max-width: 991.98px){
+	.navlink{
+		font-size: 18px;
+		margin-left: 40px;
+	}
+	.mainlogonav{
+		font-size: 40px;
+		line-height: 40px;
+		margin-bottom: -2px;
+	}
+	.navleft{
+		left: 2%;
+	}
+	.navright{
+		right: 2%;
+	}
+	
+}
+
+@media only screen and (max-width: 767.98px){
+	#navdrop{
+		display: inline-block;
+	}
+	.navright{
+		display: none;
+	}
+	.navleft{
+		left: 5%;
+	}
+	.title{
+		font-size: 2.8em;
+	}
+	.mainlogonav{
+		font-size: 48px;
+		line-height: 48px;
+	}
 }

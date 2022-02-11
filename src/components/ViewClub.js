@@ -25,15 +25,15 @@ class ViewClub extends Component {
 		return (
 			<div>
 				<div className='topadcontainer'>
-					<div className='topad d-inline-block d-lg-none'>
+					<div className='topad d-inline-block d-xl-none'>
 						{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
 					</div>
-					<div className='topad d-inline-block d-lg-none'>
+					<div className='topad d-inline-block d-xl-none'>
 						{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
 					</div>
 				</div>
 				<div className='row no-gutters'>
-					<div className='col sidead d-none d-lg-block'>
+					<div className='col sidead d-none d-xl-block'>
 						{this.state.ads ? <Ad {...this.state.ads[0]} /> : null}
 					</div>
 					
@@ -46,7 +46,7 @@ class ViewClub extends Component {
 							<Error404 />}
 					</div>
 					
-					<div className='col sidead d-none d-lg-block'>
+					<div className='col sidead d-none d-xl-block'>
 						{this.state.ads ? <Ad {...this.state.ads[1]} /> : null}
 					</div>
 				</div>
